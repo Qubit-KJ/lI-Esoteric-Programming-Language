@@ -1,5 +1,3 @@
-cd Desktop/code/ilil
-
 gcc src/main.c -o builds/main.o -c
 gcc src/io.c   -o builds/io.o   -c
 
