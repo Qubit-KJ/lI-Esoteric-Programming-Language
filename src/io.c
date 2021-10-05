@@ -1,9 +1,9 @@
 #include "io.h"
-#include "interpret.h"
 
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <stdio.h>
 
 char *load_file(char const *path, size_t *len)
 {
@@ -52,7 +52,7 @@ void errori(char const *from, char const *msg, int option)
 {
     char buf[128];
     sprintf(buf, msg, option);
-    printf("\n[%s]: %s (Line %lu)\n", from, buf, line_n);
+    printf("\n[%s]: %s\n", from, buf);
     exit(1);
 }
 
@@ -60,5 +60,27 @@ void warns(char const *from, char const *msg, char const *option)
 {
     char buf[128];
     sprintf(buf, msg, option);
-    printf("\n[%s]: %s (Line %lu)\n", from, buf, line_n);
+    printf("\n[%s]: %s\n", from, buf);
+}
+
+/* 
+    routine for printing a character to Il output
+    code modified from: 
+        https://www.programmingsimplified.com/c/source-code/c-program-convert-decimal-to-binary
+*/
+void printchril(char chr)
+{
+    for (int c = 8 - 1; c >= 0; c--)
+    {
+        write(STDOUT_FILENO, (chr >> c) & 1 ? "I" : "l", 1);
+    }
+}
+
+// routine for printing a string to Il output.
+void printstril(char *str)
+{
+    for (char *c = str; *c != '\0'; c++)
+    {
+        printchril(*c);
+    }
 }
