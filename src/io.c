@@ -11,7 +11,7 @@ char *load_file(char const *path, size_t *len)
 
     if (!file)
     {
-        exit(1);
+        error("Error opening file.");
     }
 
     fseek(file, 0, SEEK_END);
@@ -24,14 +24,14 @@ char *load_file(char const *path, size_t *len)
     {
         fclose(file);
         free(contents);
-        exit(1);
+        error("Error allocating memory for file contents.");
     }
 
     if( 1 != fread( contents , *len, 1 , file) )
     {
         fclose(file);
         free(contents);
-        exit(1);
+        error("Error reading file.");
     }
     
     char *fixed_contents = calloc(sizeof(char), *len);
@@ -40,6 +40,14 @@ char *load_file(char const *path, size_t *len)
 
     fclose(file);
     return fixed_contents;
+}
+
+void error(char *errmsg)
+{
+    printstril("ERROR: ");
+    printstril(errmsg);
+    printf("\n");
+    exit(1);
 }
 
 /* 
@@ -51,7 +59,7 @@ void printchril(char chr)
 {
     for (int c = 8 - 1; c >= 0; c--)
     {
-        write(STDOUT_FILENO, (chr >> c) & 1 ? "I" : "l", 1);
+        write(STDOUT_FILENO, (chr >> c) & 1 ? "1" : "0", 1);
     }
 }
 

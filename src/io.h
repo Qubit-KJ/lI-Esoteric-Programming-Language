@@ -5,6 +5,8 @@
 
 char *load_file(char const *path, size_t *len);
 
+void error(char *errmsg);
+
 void printstril(char *str);
 void printchril(char chr);
 
