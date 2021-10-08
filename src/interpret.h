@@ -1,6 +1,10 @@
 #ifndef __INTERPRET_H
 #define __INTERPRET_H
 
-void interpret_file(char *file_contents);
+#include <stdio.h>
+
+#define MAX_LINE_LEN 128
+
+void interpret_file(FILE *file);
 
 #endif

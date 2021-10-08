@@ -7,12 +7,7 @@
 
 char *load_file(char const *path, size_t *len)
 {
-    FILE *file = fopen(path, "r");
-
-    if (!file)
-    {
-        error("Error opening file.");
-    }
+    FILE *file = open_file(path);
 
     fseek(file, 0, SEEK_END);
     *len = ftell(file);
@@ -42,9 +37,15 @@ char *load_file(char const *path, size_t *len)
     return fixed_contents;
 }
 
+FILE *open_file(char const *path)
+{
+    FILE *file = fopen(path, "r");
+    if (!file) error("Error opening file.");
+    return file;
+}
+
 void error(char *errmsg)
 {
-    printstril("ERROR: ");
     printstril(errmsg);
     printf("\n");
     exit(1);
@@ -59,7 +60,7 @@ void printchril(char chr)
 {
     for (int c = 8 - 1; c >= 0; c--)
     {
-        write(STDOUT_FILENO, (chr >> c) & 1 ? "1" : "0", 1);
+        write(STDOUT_FILENO, (chr >> c) & 1 ? "I" : "l", 1);
     }
 }
 

@@ -1,11 +1,14 @@
 #include "interpret.h"
 
 #include <string.h>
+#include <stdio.h>
+
+size_t line_n = 0;
 
 void interpret_line(char *line)
 {
-	//do they need comments?
-    //if (line[0] == '/' && line[1] == '/') return 0;
+    // for comments
+    if (line[0] == '/' && line[1] == '/') return;
     
     char *remaining = NULL, *word = NULL;
     word = strtok_r(line, " ", &remaining);
@@ -20,20 +23,17 @@ void interpret_line(char *line)
     }
 }
 
-void interpret_file(char *file_contents)
+void interpret_file(FILE *file)
 {
-	char *line = NULL;
-    line = strtok(file_contents, "\r\n");
-    
-    while (line != NULL)
-    {
-        // not having a new line at the end of the file causes problems
-        // removing the strange backspace at the end fixes that
-        char *backspace = strchr(line, 8);
-        if (backspace != NULL) *backspace = 0;
-
+    char line[MAX_LINE_LEN]; 
+    while(fgets(line, MAX_LINE_LEN, file) != NULL) {
+        line_n ++;
         interpret_line(line);
-
-        line = strtok(NULL, "\r\n");
     }
+    fclose(file);
+    printf("%lu\n", line_n);
 }
+
+
+
+
