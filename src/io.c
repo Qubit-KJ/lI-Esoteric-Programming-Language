@@ -60,7 +60,7 @@ void printchril(char chr)
 {
     for (int c = 8 - 1; c >= 0; c--)
     {
-        write(STDOUT_FILENO, (chr >> c) & 1 ? "I" : "l", 1);
+        write(STDOUT_FILENO, (chr >> c) & 1 ? "1" : "0", 1);
     }
 }
 

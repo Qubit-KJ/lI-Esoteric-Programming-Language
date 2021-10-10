@@ -7,7 +7,7 @@ size_t line_n = 0;
 
 void interpret_line(char *line)
 {
-    // for comments
+    // for comments, but do we need them?
     if (line[0] == '/' && line[1] == '/') return;
     
     char *remaining = NULL, *word = NULL;
@@ -31,7 +31,6 @@ void interpret_file(FILE *file)
         interpret_line(line);
     }
     fclose(file);
-    printf("%lu\n", line_n);
 }
 
 
