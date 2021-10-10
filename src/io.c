@@ -60,7 +60,11 @@ void printchril(char chr)
 {
     for (int c = 8 - 1; c >= 0; c--)
     {
+        #ifdef USE_Il
+        write(STDOUT_FILENO, (chr >> c) & 1 ? "I" : "l", 1);
+        #else
         write(STDOUT_FILENO, (chr >> c) & 1 ? "1" : "0", 1);
+        #endif
     }
 }
 
